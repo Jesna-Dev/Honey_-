@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Oswald } from "next/font/google";
+import { Inter, Kaushan_Script, Zilla_Slab } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,18 +8,17 @@ const inter = Inter({
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const zilla = Zilla_Slab({
+  variable: "--font-zilla",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const oswald = Oswald({
-  variable: "--font-oswald",
+const kaushan = Kaushan_Script({
+  variable: "--font-kaushan",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
   display: "swap",
 });
 
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${oswald.variable}`}>
+    <html lang="en" className={`${inter.variable} ${zilla.variable} ${kaushan.variable}`}>
       <body>{children}</body>
     </html>
   );

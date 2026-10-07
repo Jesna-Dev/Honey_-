@@ -1,0 +1,69 @@
+/* Positioned at the pointer; the bee's head sits on the hotspot. */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  will-change: transform;
+}
+
+.cursor[data-visible="true"] {
+  opacity: 1;
+}
+
+.bee {
+  width: 38px;
+  height: 33px;
+  /* offset so the head (not the middle of the body) is at the pointer */
+  margin: -16px 0 0 -30px;
+  transform-origin: 30px 16px;
+  transform: scaleX(var(--facing, 1)) rotate(var(--tilt, 0deg));
+  transition: width 0.25s ease, height 0.25s ease;
+  filter: drop-shadow(0 3px 4px rgba(60, 30, 0, 0.35));
+}
+
+.cursor[data-hover="true"] .bee {
+  width: 46px;
+  height: 40px;
+}
+
+.cursor[data-press="true"] .bee {
+  width: 32px;
+  height: 28px;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Rapid wing beats; the wings pivot where they join the body */
+.wingFront,
+.wingBack {
+  transform-box: fill-box;
+  transform-origin: 50% 95%;
+  animation: flap 0.09s ease-in-out infinite alternate;
+}
+
+.wingBack {
+  animation-delay: -0.045s;
+  opacity: 0.85;
+}
+
+.cursor[data-hover="true"] .wingFront,
+.cursor[data-hover="true"] .wingBack {
+  animation-duration: 0.06s;
+}
+
+@keyframes flap {
+  from {
+    transform: scaleY(1) rotate(0deg);
+  }
+  to {
+    transform: scaleY(0.35) rotate(-12deg);
+  }
+}

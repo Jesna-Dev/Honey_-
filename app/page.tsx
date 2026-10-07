@@ -1,36 +1,39 @@
 import Image from "next/image";
+import BeeCursor from "./components/BeeCursor";
+import { CloudEdge, DripEdge, Landscape } from "./components/Edges";
+import FactTabs from "./components/FactTabs";
 import Header from "./components/Header";
-import ProductTabs from "./components/ProductTabs";
+import OrderForm from "./components/OrderForm";
+import ProductShowcase from "./components/ProductShowcase";
 import ScrollJar from "./components/ScrollJar";
 import styles from "./page.module.css";
 
-const sheet: [string, string][] = [
-  ["Variety", "Giant wild honey"],
-  ["Source", "Wild giant honey bee colonies"],
-  ["Processing", "Raw, unheated, gently strained"],
-  ["Net weight", "500 g"],
-  ["Storage", "Room temperature, away from sunlight"],
-];
-
-const pairings = ["Warm water & lemon", "Ginger tea", "Banana & oats", "Fresh curd", "Toasted bread", "Fruit salads"];
-
-// Floating honey droplets in the hero sky (some blurred for depth).
+// Floating honey droplets in the hero (some blurred for depth).
 const drops = [
-  { x: "8%", y: "62%", size: 38, blur: 3 },
-  { x: "18%", y: "20%", size: 14, blur: 0 },
-  { x: "30%", y: "48%", size: 10, blur: 1 },
-  { x: "62%", y: "14%", size: 16, blur: 0 },
-  { x: "70%", y: "44%", size: 26, blur: 2 },
-  { x: "88%", y: "24%", size: 18, blur: 1 },
-  { x: "92%", y: "70%", size: 44, blur: 4 },
-  { x: "45%", y: "78%", size: 12, blur: 0 },
+  { x: "6%", y: "70%", size: 30, blur: 2 },
+  { x: "22%", y: "16%", size: 12, blur: 0 },
+  { x: "46%", y: "64%", size: 16, blur: 1 },
+  { x: "58%", y: "18%", size: 10, blur: 0 },
+  { x: "90%", y: "62%", size: 36, blur: 3 },
 ];
 
-const chips = [
-  { label: "Raw", icon: "M12 3c3 4.2 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 3-6.8 6-11z" },
-  { label: "Unheated", icon: "M12 3v10m-4-6a6 6 0 1 0 8 0M4 4l16 16" },
-  { label: "Wild-harvested", icon: "M5 19c0-8 5-13 14-14-1 9-6 14-14 14zm0 0 7-7" },
-  { label: "500 g", icon: "M8 3h8v3H8zM7 6h10l1 3v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z" },
+const regionBadges = [
+  { title: "Forest", text: "Wild combs high in the canopy" },
+  { title: "Raw", text: "Never heated, never blended" },
+  { title: "Hand-jarred", text: "Strained and sealed with care" },
+];
+
+const steps = [
+  { n: "01", title: "Found in the forest", text: "Giant honey bees build open combs high in trees and on rock faces." },
+  { n: "02", title: "Harvested by hand", text: "Combs are gathered carefully, taking honey while leaving the colony to recover." },
+  { n: "03", title: "Strained, not heated", text: "The honey is gently strained to remove wax, keeping its natural character." },
+  { n: "04", title: "Jarred and sealed", text: "Every jar is filled and sealed, ready to bring the wild to your table." },
+];
+
+const stats = [
+  { value: "100%", label: "raw honey" },
+  { value: "0", label: "additives" },
+  { value: "500 g", label: "per jar" },
 ];
 
 export default function Home() {
@@ -38,174 +41,252 @@ export default function Home() {
     <>
       <Header />
       <ScrollJar />
+      <BeeCursor />
 
       <main>
-        {/* Hero */}
+        {/* ---------- Hero (honey orange) ---------- */}
         <section id="top" className={styles.hero}>
-          <div className={styles.heroSky} aria-hidden>
-            <span className={`${styles.cloud} ${styles.cloud1}`} />
-            <span className={`${styles.cloud} ${styles.cloud2}`} />
-            <span className={`${styles.cloud} ${styles.cloud3}`} />
-            {drops.map((d, i) => (
-              <span
-                key={i}
-                className={styles.drop}
-                style={{
-                  left: d.x,
-                  top: d.y,
-                  width: d.size,
-                  height: d.size,
-                  filter: d.blur ? `blur(${d.blur}px)` : undefined,
-                  animationDelay: `${i * -1.3}s`,
-                }}
-              />
-            ))}
+          <div className={styles.heroHex} aria-hidden />
+          {drops.map((d, i) => (
+            <span
+              key={i}
+              className={styles.drop}
+              aria-hidden
+              style={{
+                left: d.x,
+                top: d.y,
+                width: d.size,
+                height: d.size,
+                filter: d.blur ? `blur(${d.blur}px)` : undefined,
+                animationDelay: `${i * -1.4}s`,
+              }}
+            />
+          ))}
+          <Image
+            src="/images/honeycomb.png"
+            alt=""
+            width={478}
+            height={553}
+            className={styles.heroComb}
+            sizes="220px"
+          />
+
+          <div className={styles.heroInner}>
+            <div className={styles.heroCopy}>
+              <p className={styles.heroScript}>Tilia</p>
+              <h1 className={styles.heroTitle}>Pure Giant Wild Honey</h1>
+              <p className={styles.heroLead}>
+                Raw honey from the giant wild honey bee, gathered from the forest and jarred
+                just as the bees made it.
+              </p>
+              <div className={styles.heroActions}>
+                <a href="#order" className={styles.pillBtnDark}>
+                  Order a jar
+                </a>
+                <a href="#product" className={styles.pillGhost}>
+                  Discover
+                </a>
+              </div>
+            </div>
+            <div className={styles.slotXl} data-jar-slot data-jar-tilt="-4" />
           </div>
 
-          <h1 className={styles.heroHeadline}>
-            The wild,
-            <br />
-            in a jar
-          </h1>
+          {/* honeycomb melting into drips that hang over the next section */}
+          <div className={styles.heroDrips} aria-hidden />
+        </section>
 
-          <div className={styles.heroStage}>
-            <div className={`${styles.glassCard} ${styles.heroIntro}`}>
-              <h2>Straight from the forest</h2>
-              <p>
-                Raw honey from the giant wild honey bee, jarred just as the bees made it.
+        {/* ---------- Product ---------- */}
+        <section id="product" className={styles.product}>
+          <div className={styles.head}>
+            <p className={styles.kicker}>Our honey</p>
+            <h2 className={styles.h2}>One jar, the whole forest</h2>
+          </div>
+          <ProductShowcase />
+        </section>
+
+        {/* ---------- Origin (purple) ---------- */}
+        <section id="origin" className={styles.origin}>
+          <DripEdge className={styles.topDrips} color="#fff" shine="#fff" />
+          <div className={styles.originInner}>
+            <div className={styles.slotMd} data-jar-slot data-jar-tilt="-8" />
+            <div className={styles.text}>
+              <p className={styles.script}>From the wild</p>
+              <h2 className={styles.h2Light}>The Western Ghats</h2>
+              <p className={styles.lightP}>
+                A green mountain range along India&apos;s west coast, home to dense forest, a
+                huge variety of flowering plants, and the wild bees that feed on them.
               </p>
-              <a href="#buy" className={styles.pillBtn}>
-                Shop now
-              </a>
+              <div className={styles.mapCard}>
+                <iframe
+                  title="Map of the Western Ghats in Kerala"
+                  className={styles.map}
+                  loading="lazy"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=75.4%2C8.6%2C77.6%2C12.2&layer=mapnik&marker=10.4%2C76.6"
+                />
+              </div>
+              <ul className={styles.hexBadges}>
+                {regionBadges.map((b) => (
+                  <li key={b.title}>
+                    <strong>{b.title}</strong>
+                    <span>{b.text}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
+          <CloudEdge className={styles.bottomClouds} />
+        </section>
 
-            <div className={styles.heroCenter}>
-              <div className={styles.heroSlot} data-jar-slot data-jar-tilt="0" />
+        {/* ---------- Order ---------- */}
+        <section id="order" className={styles.order}>
+          <div className={styles.orderInner}>
+            <div className={styles.orderPitch}>
+              <p className={styles.kicker}>Order</p>
+              <h2 className={styles.h2}>Bring a jar home</h2>
+              <p className={styles.p}>
+                Leave your details and we&apos;ll get back to you to confirm your order and
+                delivery.
+              </p>
+              <div className={styles.badge}>
+                <strong>500 g</strong>
+                <span>raw giant wild honey</span>
+              </div>
               <Image
                 src="/images/honeycomb.png"
                 alt=""
                 width={478}
                 height={553}
-                preload
-                className={styles.comb}
-                sizes="(max-width: 768px) 80vw, 460px"
+                className={styles.orderComb}
+                sizes="260px"
               />
             </div>
-
-            <figure className={styles.photoCard}>
-              <figcaption className={styles.photoCapTop}>Gathered in the wild</figcaption>
-              <div className={styles.photoFrame}>
-                <Image
-                  src="/images/tilia-photo.jpg"
-                  alt="A jar of Tilia Pure Giant Wild Honey on grass"
-                  fill
-                  sizes="(max-width: 768px) 80vw, 240px"
-                />
-              </div>
-              <figcaption className={styles.photoCapBottom}>Raw, rich &amp; unheated</figcaption>
-            </figure>
-          </div>
-
-          <ul className={styles.chips}>
-            {chips.map((c) => (
-              <li key={c.label} className={styles.chip}>
-                <svg viewBox="0 0 24 24" aria-hidden>
-                  <path d={c.icon} />
-                </svg>
-                <span>{c.label}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Story */}
-        <section id="story" className={`${styles.section} ${styles.reverse}`}>
-          <div className={`${styles.slot} ${styles.slotSmall}`} data-jar-slot data-jar-tilt="-8" />
-          <div className={styles.text}>
-            <p className={styles.eyebrow}>Our story</p>
-            <h2 className={styles.title}>
-              From the <em>forest canopy</em>
-            </h2>
-            <p>
-              Giant honey bees don&apos;t live in boxes. They build single, open combs high in
-              tall trees and on rock faces, feeding on whatever the wild forest is blooming.
-            </p>
-            <p>
-              Tilia brings that honey to your table with as little in between as possible: no
-              heating, no blending, no additives. Just the colour, aroma and depth of the wild.
-            </p>
-          </div>
-        </section>
-
-        {/* Product */}
-        <section id="honey" className={`${styles.section} ${styles.soft}`}>
-          <div className={styles.text}>
-            <p className={styles.eyebrow}>The honey · 500 g</p>
-            <h2 className={styles.title}>
-              Pure Giant <em>Wild Honey</em>
-            </h2>
-            <ul className={styles.notes}>
-              <li>Deep amber</li>
-              <li>Floral</li>
-              <li>Rich finish</li>
-            </ul>
-            <p>
-              A full-bodied honey with a warm, layered sweetness. Because it&apos;s raw, it may
-              crystallise in cooler weather; that&apos;s a natural sign it hasn&apos;t been
-              processed. Warm the jar gently to bring it back.
-            </p>
-            <ProductTabs sheet={sheet} pairings={pairings} />
-          </div>
-          <div className={styles.slot} data-jar-slot data-jar-tilt="6" />
-        </section>
-
-        {/* Region */}
-        <section id="region" className={`${styles.section} ${styles.reverse}`}>
-          <div className={`${styles.slot} ${styles.slotSmall}`} data-jar-slot data-jar-tilt="-4" />
-          <div className={styles.text}>
-            <p className={styles.eyebrow}>Where it comes from</p>
-            <h2 className={styles.title}>
-              The <em>Western Ghats</em>
-            </h2>
-            <p>
-              A green mountain range running along India&apos;s west coast, home to dense
-              forest and a huge variety of flowering plants, and to the wild bees that feed
-              on them.
-            </p>
-            <div className={styles.mapWrap}>
-              <iframe
-                title="Map of the Western Ghats in Kerala"
-                className={styles.map}
-                loading="lazy"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=75.4%2C8.6%2C77.6%2C12.2&layer=mapnik&marker=10.4%2C76.6"
-              />
+            <div className={styles.formCard}>
+              <h3>Request your jar</h3>
+              <OrderForm />
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section id="buy" className={`${styles.section} ${styles.dark}`}>
-          <div className={styles.ctaMosaic} aria-hidden />
-          <div className={styles.text}>
-            <p className={styles.eyebrowLight}>Bring it home</p>
-            <h2 className={styles.title}>
-              Taste the <em>wild</em>
-            </h2>
-            <p className={styles.ctaText}>
-              Order a 500 g jar of Tilia Pure Giant Wild Honey directly from us.
-            </p>
-            <a href="mailto:hello@tiliahoney.example" className={styles.btnPrimary}>
-              Buy now
-            </a>
+        {/* ---------- Wholesale ---------- */}
+        <section id="wholesale" className={styles.wholesale}>
+          <div className={styles.wholesaleInner}>
+            <div className={styles.wholesaleCard}>
+              <p className={styles.kickerLight}>For shops &amp; cafés</p>
+              <h2 className={styles.h2Light}>Stock Tilia</h2>
+              <p className={styles.lightP}>
+                We work with retailers, cafés and gift shops that care about where their honey
+                comes from.
+              </p>
+              <ul className={styles.wholesaleList}>
+                <li>
+                  <strong>Retail partners</strong>
+                  <span>Shelf-ready 500 g jars</span>
+                </li>
+                <li>
+                  <strong>Cafés &amp; kitchens</strong>
+                  <span>Regular supply for your menu</span>
+                </li>
+              </ul>
+              <a href="mailto:hello@tiliahoney.example?subject=Wholesale%20enquiry" className={styles.pillBtn}>
+                Get in touch
+              </a>
+            </div>
+            <div className={styles.wholesaleSide}>
+              <h3 className={styles.bigClaim}>
+                Honey worth <em>talking</em> about
+              </h3>
+              <div className={styles.slotMd} data-jar-slot data-jar-tilt="6" />
+            </div>
           </div>
-          <div className={styles.slot} data-jar-slot data-jar-tilt="0" />
+        </section>
+
+        {/* ---------- Process (purple) ---------- */}
+        <section id="process" className={styles.process}>
+          {/* cream, to continue the wholesale section's background */}
+          <DripEdge className={styles.topDrips} color="var(--cream)" shine="#fff" />
+          <div className={styles.head}>
+            <p className={styles.script}>About our honey</p>
+            <h2 className={styles.h2Light}>From comb to jar</h2>
+          </div>
+          <div className={styles.steps}>
+            <ol className={styles.stepCol}>
+              {steps.slice(0, 2).map((s) => (
+                <li key={s.n} className={styles.step}>
+                  <span>{s.n}</span>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </li>
+              ))}
+            </ol>
+            <div className={styles.stepCenter}>
+              <div className={styles.stageGlow} aria-hidden />
+              <div className={styles.slotLg} data-jar-slot data-jar-tilt="0" />
+            </div>
+            <ol className={styles.stepCol} start={3}>
+              {steps.slice(2).map((s) => (
+                <li key={s.n} className={styles.step}>
+                  <span>{s.n}</span>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <CloudEdge className={styles.bottomClouds} />
+        </section>
+
+        {/* ---------- Facts ---------- */}
+        <section id="facts" className={styles.factsSection}>
+          <div className={styles.head}>
+            <p className={styles.kicker}>Good to know</p>
+            <h2 className={styles.h2}>Honey questions, answered</h2>
+          </div>
+          <div className={styles.factsInner}>
+            <div className={styles.slotMd} data-jar-slot data-jar-tilt="-6" />
+            <FactTabs />
+          </div>
+        </section>
+
+        {/* ---------- Quality band ---------- */}
+        <section id="quality" className={styles.quality}>
+          <Landscape className={styles.landscape} />
+          <div className={styles.qualityInner}>
+            <div className={styles.text}>
+              <p className={styles.script}>Quality you can taste</p>
+              <h2 className={styles.h2Light}>Straight from the wild</h2>
+            </div>
+            <div className={styles.qualityRow}>
+              <ul className={styles.stats}>
+                {stats.slice(0, 2).map((s) => (
+                  <li key={s.label}>
+                    <strong>{s.value}</strong>
+                    <span>{s.label}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.slotLg} data-jar-slot data-jar-tilt="0" />
+              <ul className={styles.stats}>
+                {stats.slice(2).map((s) => (
+                  <li key={s.label}>
+                    <strong>{s.value}</strong>
+                    <span>{s.label}</span>
+                  </li>
+                ))}
+                <li>
+                  <a href="#order" className={styles.pillBtn}>
+                    Order now
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </section>
       </main>
 
       <footer className={styles.footer}>
         <div className={styles.footerTop}>
-          <a href="#top" className={styles.logo}>
-            TILIA<small>HONEY</small>
+          <a href="#top" className={styles.footerLogo}>
+            Tilia<small>Honey</small>
           </a>
           <div className={styles.footerCols}>
             <div>
@@ -220,6 +301,12 @@ export default function Home() {
                 <br />
                 Kerala, India
               </p>
+            </div>
+            <div>
+              <h4>Explore</h4>
+              <a href="#product">Our honey</a>
+              <a href="#origin">Origin</a>
+              <a href="#order">Order</a>
             </div>
           </div>
         </div>

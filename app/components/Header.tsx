@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import styles from "../page.module.css";
 
 const links = [
-  { href: "#story", label: "Our Story" },
-  { href: "#honey", label: "The Honey" },
-  { href: "#region", label: "The Region" },
+  { href: "#product", label: "Our Honey" },
+  { href: "#origin", label: "Origin" },
+  { href: "#process", label: "Process" },
+  { href: "#facts", label: "Good to Know" },
 ];
 
 export default function Header() {
@@ -23,7 +24,7 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled || open ? styles.headerSolid : ""}`}>
       <a href="#top" className={styles.logo} onClick={() => setOpen(false)}>
-        TILIA<small>HONEY</small>
+        Tilia<small>Honey</small>
       </a>
 
       <nav className={`${styles.nav} ${open ? styles.navOpen : ""}`}>
@@ -32,8 +33,8 @@ export default function Header() {
             {l.label}
           </a>
         ))}
-        <a href="#buy" className={styles.buyBtn} onClick={() => setOpen(false)}>
-          Buy
+        <a href="#order" className={styles.buyBtn} onClick={() => setOpen(false)}>
+          Order
         </a>
       </nav>
 

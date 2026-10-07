@@ -1,28 +1,30 @@
 /* ===== Design Tokens ===== */
 :root {
-  /* Palette taken from the Tilia label: royal purple with copper-gold */
-  --bg: #fdfbf7;
-  --bg-soft: #f5eff8;
-  --bg-dark: #24123d;
+  /* Honey orange + Tilia label purple */
+  --bg: #ffffff;
+  --cream: #fff8ec;
+  --honey: #f6a313;
+  --honey-deep: #e8860a;
+  --honey-light: #ffc845;
+  --amber: #c86a00;
   --purple: #4a2a7a;
+  --purple-deep: #2a1640;
+  --purple-ink: #1d0f2e;
+  --gold: #e9b44c;
 
-  --gold: #b0763a;
-  --gold-light: #dcaa6a;
-  --gold-pale: #efd9bd;
-
-  --text: #22182e;
-  --text-soft: #5a5066;
-  --text-muted: #8e8598;
-  --line: #e6dfe9;
+  --text: #2b1b0e;
+  --text-soft: #6b5442;
+  --text-muted: #9c8877;
+  --line: #f0e3cf;
 
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-display: var(--font-oswald), "Arial Narrow", sans-serif;
-  --brown: #5a3510;
-  --honey: #e3a63a;
+  --font-slab: var(--font-zilla), Rockwell, Georgia, serif;
+  --font-script: var(--font-kaushan), "Brush Script MT", cursive;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --header-h: 76px;
+  /* height of the honey-drip band under the hero */
+  --drip-h: clamp(64px, 7vw, 110px);
 }
 
 *,
@@ -69,4 +71,15 @@ svg {
 
 ::selection {
   background: var(--gold-pale);
+}
+
+/* Bee cursor (class added by BeeCursor on precise-pointer devices only) */
+html.bee-cursor,
+html.bee-cursor * {
+  cursor: none !important;
+}
+
+html.bee-cursor input,
+html.bee-cursor textarea {
+  cursor: text !important;
 }
