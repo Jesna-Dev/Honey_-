@@ -70,6 +70,24 @@ const tabs = [
   },
 ];
 
+const features = [
+  {
+    title: "Raw",
+    text: "Straight from the comb, nothing added.",
+    icon: "M12 3c3 4.2 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 3-6.8 6-11z",
+  },
+  {
+    title: "Unheated",
+    text: "Gently strained to keep its character.",
+    icon: "M12 3v10m-4-6a6 6 0 1 0 8 0M4 4l16 16",
+  },
+  {
+    title: "Wild-harvested",
+    text: "From giant honey bees in the forest.",
+    icon: "M5 19c0-8 5-13 14-14-1 9-6 14-14 14zm0 0 7-7",
+  },
+];
+
 export default function ProductShowcase() {
   const [active, setActive] = useState(tabs[0].id);
   const tab = tabs.find((t) => t.id === active)!;
@@ -91,10 +109,22 @@ export default function ProductShowcase() {
       </div>
 
       <div className={styles.showcase}>
-        <div className={styles.showcaseSide}>
-          <span className={styles.ghostHex} aria-hidden />
-          <p className={styles.showcaseKicker}>Raw · Unheated · Wild</p>
-        </div>
+        <ul className={styles.features}>
+          {features.map((f, i) => (
+            <li key={f.title}>
+              <span className={styles.featureIcon}>
+                <svg viewBox="0 0 24 24" aria-hidden>
+                  <path d={f.icon} />
+                </svg>
+              </span>
+              <div>
+                <small>{String(i + 1).padStart(2, "0")}</small>
+                <strong>{f.title}</strong>
+                <p>{f.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
 
         <div className={styles.showcaseStage}>
           <div className={styles.stageGlow} aria-hidden />
