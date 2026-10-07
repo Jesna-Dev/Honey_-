@@ -1,0 +1,72 @@
+/* ===== Design Tokens ===== */
+:root {
+  /* Palette taken from the Tilia label: royal purple with copper-gold */
+  --bg: #fdfbf7;
+  --bg-soft: #f5eff8;
+  --bg-dark: #24123d;
+  --purple: #4a2a7a;
+
+  --gold: #b0763a;
+  --gold-light: #dcaa6a;
+  --gold-pale: #efd9bd;
+
+  --text: #22182e;
+  --text-soft: #5a5066;
+  --text-muted: #8e8598;
+  --line: #e6dfe9;
+
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-display: var(--font-oswald), "Arial Narrow", sans-serif;
+  --brown: #5a3510;
+  --honey: #e3a63a;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --header-h: 76px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--gold-pale);
+}
