@@ -10,14 +10,14 @@ import styles from "../page.module.css";
    it rolls across to the next one. Layout (and therefore responsiveness) is
    decided entirely by where the slots sit in CSS. */
 
-const JAR_W = 569;
-const JAR_H = 802;
+const JAR_W = 837;
+const JAR_H = 1249;
 
 type Pose = { x: number; y: number; scale: number; rot: number };
 
 // How quickly the drawn jar catches up with its scroll position (per second).
 // Lower = floatier; higher = tighter to the scrollbar.
-const FOLLOW = 7;
+const FOLLOW = 3;
 
 type Stop = {
   anchor: number; // scrollY at which the slot is centred in the viewport
@@ -81,15 +81,15 @@ export default function ScrollJar() {
       if (!next || s < a.anchor) return { x: a.x, y: a.y, scale: a.scale, rot: a.tilt };
 
       const b = docked(i + 1);
-      const t = smootherstep(0.1, 0.9, (s - a.anchor) / (next.anchor - a.anchor));
+      const t = smootherstep(0, 1, (s - a.anchor) / (next.anchor - a.anchor));
 
-      // Roll: whole turns sized to the distance travelled, so the label is
-      // upright again at every slot.
+      // Roll: one unhurried full turn per trip (none for short hops), so the
+      // label is upright again at every slot.
       const dx = b.x - a.x;
       const width = JAR_W * Math.max(a.scale, b.scale);
       const turns = reduceMotion.matches || Math.abs(dx) < width * 0.5
         ? 0
-        : Math.sign(dx) * Math.max(1, Math.round(Math.abs(dx) / (Math.PI * width)));
+        : Math.sign(dx);
 
       return {
         x: lerp(a.x, b.x, t),
@@ -160,7 +160,7 @@ export default function ScrollJar() {
     <div ref={ref} className={styles.scrollJar} aria-hidden>
       <div className={styles.scrollJarFloat}>
         <Image
-          src="/images/tilia-jar.png"
+          src="/images/tilia-jar-render.png"
           alt=""
           width={JAR_W}
           height={JAR_H}

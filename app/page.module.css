@@ -166,8 +166,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 569px;
-  height: 802px;
+  width: 837px;
+  height: 1249px;
   z-index: 40;
   pointer-events: none;
   opacity: 0;
@@ -179,7 +179,7 @@
 .scrollJarFloat {
   width: 100%;
   height: 100%;
-  animation: jarFloat 5s ease-in-out infinite;
+  animation: jarFloat 8s ease-in-out infinite;
 }
 
 .scrollJarFloat img {
@@ -191,7 +191,7 @@
 
 @keyframes jarFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  50% { transform: translateY(-8px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -248,7 +248,7 @@
 .slot {
   justify-self: center;
   height: min(72vh, 660px);
-  aspect-ratio: 569 / 802;
+  aspect-ratio: 837 / 1249;
 }
 
 .slotSmall {
@@ -399,7 +399,7 @@
 
 .heroSlot {
   height: min(34vh, 360px);
-  aspect-ratio: 569 / 802;
+  aspect-ratio: 837 / 1249;
   position: relative;
   z-index: 1;
 }
@@ -410,7 +410,7 @@
   --comb-w: clamp(240px, 24vw, 360px);
   width: var(--comb-w);
   height: auto;
-  margin-top: calc(var(--comb-w) * 553 / 478 * -0.43);
+  margin-top: calc(var(--comb-w) * 553 / 478 * -0.41);
   filter: drop-shadow(0 24px 30px rgba(120, 70, 0, 0.22));
 }
 
