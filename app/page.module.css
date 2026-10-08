@@ -381,37 +381,48 @@
 .product {
   position: relative;
   background: #fff;
-  padding: calc(var(--drip-h) * 0.6 + 90px) clamp(16px, 5vw, 80px) 180px;
+  padding: calc(var(--drip-h) * 0.6 + 110px) clamp(16px, 5vw, 80px) 200px;
 }
 
+/* Name bar: quiet text tabs, thin underline on the selected one */
 .pillTabs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 5rem;
+  gap: 8px clamp(20px, 3vw, 40px);
+  margin-bottom: 5.5rem;
 }
 
 .pillTab {
-  padding: 0.6rem 1.4rem;
-  border-radius: 999px;
-  border: 2px solid var(--line);
+  position: relative;
+  padding: 0.4rem 0;
   font-family: var(--font-slab);
   font-weight: 600;
-  color: var(--text-soft);
-  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  font-size: 1rem;
+  color: var(--text-muted);
+  transition: color 0.3s;
 }
 
-.pillTab:hover {
-  border-color: var(--honey);
-  color: var(--honey-deep);
-}
-
-.pillTabActive,
-.pillTabActive:hover {
+.pillTab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
   background: var(--honey);
-  border-color: var(--honey);
-  color: #fff;
+  transform: scaleX(0);
+  transition: transform 0.4s var(--ease);
+}
+
+.pillTab:hover,
+.pillTabActive {
+  color: var(--purple-deep);
+}
+
+.pillTabActive::after {
+  transform: scaleX(1);
 }
 
 .showcase {
@@ -589,6 +600,223 @@
   content: "⬢";
   color: var(--honey);
   margin-right: 0.5rem;
+}
+
+/* ===== Product picker (carousel + order panel) ===== */
+.picker {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) 1.6fr;
+  align-items: center;
+  gap: clamp(40px, 8vw, 140px);
+}
+
+.pickerInfo {
+  max-width: 360px;
+  animation: fadeIn 0.45s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+}
+
+.pickerInfo h3 {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--purple-deep);
+}
+
+.pickerInfo > p {
+  margin: 1.1rem 0 2.8rem;
+  color: var(--text-soft);
+  line-height: 1.75;
+}
+
+.option {
+  margin-bottom: 2.2rem;
+}
+
+.optionLabel {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.weights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.weight {
+  padding: 0.55rem 1.2rem;
+  /* square boxes */
+  border-radius: 0;
+  border: 1px solid var(--line);
+  font-family: var(--font-slab);
+  font-weight: 600;
+  color: var(--text-soft);
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+
+.weight:hover {
+  border-color: var(--honey);
+  color: var(--honey-deep);
+}
+
+.weightActive,
+.weightActive:hover {
+  border-color: var(--purple-deep);
+  color: var(--purple-deep);
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.stepper button {
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  color: var(--purple-deep);
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.stepper button:hover {
+  background: var(--cream);
+}
+
+.stepper output {
+  min-width: 36px;
+  text-align: center;
+  font-family: var(--font-slab);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--purple-deep);
+}
+
+.pickerInfo .pillBtn {
+  margin-top: 0.8rem;
+  background: var(--purple-deep);
+  box-shadow: none;
+}
+
+.pickerInfo .pillBtn:hover {
+  background: var(--purple);
+}
+
+/* carousel: faded neighbour · arrow · active jar · arrow · faded neighbour */
+.carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto 1fr;
+  align-items: center;
+  gap: clamp(12px, 2.5vw, 36px);
+}
+
+/* neighbours: faint hints, not competing with the selected jar */
+.neighbour {
+  justify-self: center;
+  width: clamp(60px, 7vw, 100px);
+  opacity: 0.16;
+  transition: opacity 0.4s ease;
+}
+
+.neighbour:hover {
+  opacity: 0.35;
+}
+
+.neighbour img {
+  width: 100%;
+  height: auto;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--text-muted);
+  transition: border-color 0.25s, color 0.25s;
+}
+
+.arrow:hover {
+  border-color: var(--purple-deep);
+  color: var(--purple-deep);
+}
+
+.activeJar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(180px, 21vw, 280px);
+  /* gentle cross-fade with a short glide from the right — no tilt */
+  animation: jarIn 0.55s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+.activeJar img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 24px 28px rgba(42, 22, 64, 0.18));
+}
+
+@keyframes jarIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activeJar,
+  .pickerInfo {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .picker {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 56px;
+  }
+
+  /* jar first, then the order panel */
+  .carousel {
+    order: -1;
+    width: 100%;
+  }
+
+  .pickerInfo {
+    max-width: 480px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .neighbour {
+    display: none;
+  }
+
+  .carousel {
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+  }
 }
 
 /* ===== Purple sections (origin, process) ===== */
@@ -959,6 +1187,223 @@
   position: relative;
   display: grid;
   place-items: center;
+}
+
+/* ===== Inside the jar (exploded view) ===== */
+.anatomy {
+  /* jar size here must match the rolling jar's docked size */
+  --ah: min(54vh, 520px);
+  --ax: 50%;
+  position: relative;
+  height: 320vh;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(233, 180, 76, 0.12) 0%, rgba(233, 180, 76, 0) 55%),
+    var(--purple-ink);
+  color: #fff;
+}
+
+/* Hand-off slots: centred in the viewport exactly when the pin starts / ends */
+.anatomySlot {
+  position: absolute;
+  left: var(--ax);
+  height: var(--ah);
+  aspect-ratio: 837 / 1249;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.anatomySlotStart {
+  top: calc(50vh - var(--ah) / 2);
+}
+
+.anatomySlotEnd {
+  bottom: calc(50vh - var(--ah) / 2);
+}
+
+.anatomyStage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.anatomyIntro {
+  position: absolute;
+  z-index: 42;
+  left: clamp(16px, 6vw, 96px);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 300px;
+}
+
+.anatomyIntro .h2Light {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+}
+
+.anatomyBox {
+  position: absolute;
+  left: var(--ax);
+  top: 50%;
+  height: var(--ah);
+  aspect-ratio: 837 / 1249;
+  transform: translate(-50%, -50%);
+  container-type: size;
+  transition: opacity 0.25s ease;
+  z-index: 41;
+}
+
+.anatomyGlow {
+  position: absolute;
+  inset: -30% -60%;
+  background: radial-gradient(closest-side, rgba(246, 163, 19, calc(0.18 * var(--e, 0))), transparent);
+  pointer-events: none;
+}
+
+/* Each slice keeps its place in the jar; --e (0 to 1) pulls it apart */
+.anatomyPart {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transform: translateY(calc(var(--e, 0) * var(--dy) * 1cqh)) rotate(calc(var(--e, 0) * var(--rot) * 1deg));
+  filter: drop-shadow(0 calc(var(--e, 0) * 18px) calc(var(--e, 0) * 24px) rgba(0, 0, 0, 0.45));
+  will-change: transform;
+}
+
+.anatomyPart img {
+  object-fit: fill;
+}
+
+.anatomySeal {
+  position: absolute;
+  left: 15%;
+  width: 70%;
+  top: 9.5%;
+  opacity: var(--e, 0);
+  transform: translateY(calc(var(--e, 0) * var(--dy) * 1cqh)) scale(calc(0.8 + 0.2 * var(--e, 0)));
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.35));
+}
+
+.anatomyDrop {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff3c4 0%, #f6a91f 45%, #a65000 100%);
+  opacity: var(--e, 0);
+  transform: translate(calc(var(--e, 0) * var(--dx) * 1cqh), calc(var(--e, 0) * var(--dy) * 1cqh));
+  box-shadow: 0 0 10px rgba(246, 169, 31, 0.5);
+}
+
+/* Callouts follow their part as it moves (--y + --cdy × --e) */
+.callouts {
+  list-style: none;
+}
+
+.callouts li {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc((var(--y) + var(--cdy) * var(--e, 0)) * 1cqh);
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  /* size to content, not to the narrow jar box it's positioned in */
+  width: max-content;
+  pointer-events: none;
+}
+
+.calloutDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(233, 180, 76, 0.2);
+  opacity: var(--c);
+  transform: scale(var(--c));
+}
+
+.calloutLine {
+  flex: none;
+  width: calc(100cqw - var(--x) * 1cqw + clamp(28px, 6vw, 96px));
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), rgba(233, 180, 76, 0.4));
+  transform-origin: left;
+  transform: scaleX(var(--c));
+}
+
+.calloutText {
+  width: 250px;
+  padding-left: 14px;
+  opacity: var(--c);
+  transform: translateX(calc((1 - var(--c)) * 10px));
+}
+
+.calloutText strong {
+  display: block;
+  font-family: var(--font-slab);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.calloutText span {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 1100px) {
+  .anatomyIntro {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .anatomy {
+    --ah: 40vh;
+    --ax: 30%;
+    height: 280vh;
+  }
+
+  .anatomyIntro {
+    top: calc(var(--header-h) + 16px);
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    transform: none;
+  }
+
+  .anatomyIntro .lightP {
+    display: none;
+  }
+
+  .anatomyBox {
+    top: 58%;
+  }
+
+  .anatomySlotStart {
+    top: calc(58vh - var(--ah) / 2);
+  }
+
+  .anatomySlotEnd {
+    bottom: calc(42vh - var(--ah) / 2);
+  }
+
+  .calloutLine {
+    width: calc(100cqw - var(--x) * 1cqw + 14px);
+  }
+
+  .calloutText {
+    width: auto;
+    padding-left: 8px;
+  }
+
+  .calloutText strong {
+    font-size: 0.85rem;
+  }
+
+  .calloutText span {
+    display: none;
+  }
 }
 
 /* ===== Facts ===== */

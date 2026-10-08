@@ -2,9 +2,10 @@ import Image from "next/image";
 import BeeCursor from "./components/BeeCursor";
 import { Forest } from "./components/Edges";
 import FactTabs from "./components/FactTabs";
+import JarAnatomy from "./components/JarAnatomy";
 import Header from "./components/Header";
 import OrderForm from "./components/OrderForm";
-import ProductShowcase from "./components/ProductShowcase";
+import ProductCarousel from "./components/ProductCarousel";
 import ScrollJar from "./components/ScrollJar";
 import styles from "./page.module.css";
 
@@ -96,12 +97,13 @@ export default function Home() {
         </section>
 
         {/* ---------- Product ---------- */}
-        <section id="product" className={styles.product}>
+        {/* the carousel shows its own jars, so the rolling jar steps aside here */}
+        <section id="product" className={styles.product} data-jar-hide="view">
           <div className={styles.head}>
             <p className={styles.kicker}>Our honey</p>
-            <h2 className={styles.h2}>One jar, the whole forest</h2>
+            <h2 className={styles.h2}>Find your favourite</h2>
           </div>
-          <ProductShowcase />
+          <ProductCarousel />
         </section>
 
         {/* ---------- Origin (purple) ---------- */}
@@ -227,6 +229,9 @@ export default function Home() {
             </ol>
           </div>
         </section>
+
+        {/* ---------- Inside the jar (exploded view) ---------- */}
+        <JarAnatomy />
 
         {/* ---------- Facts ---------- */}
         <section id="facts" className={styles.factsSection}>

@@ -44,6 +44,9 @@ export default function ScrollJar() {
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let stops: Stop[] = [];
+    // Scroll ranges where another element takes over the jar (e.g. the
+    // exploded view): the rolling jar fades out while scrollY is inside one.
+    let hides: [number, number][] = [];
     let frame = 0;
 
     const measure = () => {
@@ -63,6 +66,15 @@ export default function ScrollJar() {
           };
         })
         .sort((a, b) => a.anchor - b.anchor);
+      // "pin": hidden while a sticky section is pinned (top at 0 → bottom at vh).
+      // "view": hidden while the section spans the middle of the screen.
+      hides = Array.from(document.querySelectorAll<HTMLElement>("[data-jar-hide]")).map((h) => {
+        const r = h.getBoundingClientRect();
+        const top = r.top + window.scrollY;
+        return h.dataset.jarHide === "view"
+          ? [top - vh / 2, top + r.height - vh / 2]
+          : [top, top + r.height - vh];
+      });
     };
 
     // Where the scroll position says the jar should be.
@@ -124,7 +136,9 @@ export default function ScrollJar() {
 
       el.style.transform =
         `translate3d(${c.x - JAR_W / 2}px, ${c.y - JAR_H / 2}px, 0) scale(${c.scale}) rotate(${c.rot}deg)`;
-      el.style.opacity = "1";
+      const s = window.scrollY;
+      const hidden = hides.some(([a, b]) => s > a + 2 && s < b - 2);
+      el.style.opacity = hidden ? "0" : "1";
 
       const settled =
         Math.abs(c.x - goal.x) < 0.1 &&

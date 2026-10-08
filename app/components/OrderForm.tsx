@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import styles from "../page.module.css";
 
 // Placeholder address — replace with the real order inbox.
@@ -9,6 +9,20 @@ const ORDER_EMAIL = "hello@tiliahoney.example";
 /* No backend yet: the form composes an email to the order inbox. */
 export default function OrderForm() {
   const [sent, setSent] = useState(false);
+  const form = useRef<HTMLFormElement>(null);
+
+  // "Order now" in the product picker pre-fills the quantity and a note.
+  useEffect(() => {
+    const onPick = (e: Event) => {
+      const { name, weight, qty } = (e as CustomEvent<{ name: string; weight: string; qty: number }>).detail;
+      const f = form.current;
+      if (!f) return;
+      (f.elements.namedItem("jars") as HTMLInputElement).value = String(qty);
+      (f.elements.namedItem("note") as HTMLTextAreaElement).value = `${name}, ${weight} jar`;
+    };
+    window.addEventListener("tilia:order", onPick);
+    return () => window.removeEventListener("tilia:order", onPick);
+  }, []);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,7 +30,7 @@ export default function OrderForm() {
     const body = [
       `Name: ${data.get("name")}`,
       `Phone: ${data.get("phone")}`,
-      `Jars (500 g): ${data.get("jars")}`,
+      `Jars: ${data.get("jars")}`,
       "",
       String(data.get("note") ?? ""),
     ].join("\n");
@@ -27,7 +41,7 @@ export default function OrderForm() {
   };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form ref={form} className={styles.form} onSubmit={onSubmit}>
       <label>
         <span>Your name</span>
         <input name="name" required autoComplete="name" />
