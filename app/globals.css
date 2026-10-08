@@ -47,7 +47,9 @@ body {
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* clip (not hidden) so nothing wider than the screen can cause sideways
+     scrolling, without creating a scroll container that breaks fixed layers */
+  overflow-x: clip;
 }
 
 a {
@@ -70,7 +72,7 @@ svg {
 }
 
 ::selection {
-  background: var(--gold-pale);
+  background: #ffe2a8;
 }
 
 /* Bee cursor (class added by BeeCursor on precise-pointer devices only) */

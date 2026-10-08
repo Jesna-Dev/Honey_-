@@ -1,6 +1,6 @@
 import Image from "next/image";
 import BeeCursor from "./components/BeeCursor";
-import { CloudEdge, DripEdge, Landscape } from "./components/Edges";
+import { Forest } from "./components/Edges";
 import FactTabs from "./components/FactTabs";
 import Header from "./components/Header";
 import OrderForm from "./components/OrderForm";
@@ -106,11 +106,10 @@ export default function Home() {
 
         {/* ---------- Origin (purple) ---------- */}
         <section id="origin" className={styles.origin}>
-          <DripEdge className={styles.topDrips} color="#fff" shine="#fff" />
           <div className={styles.originInner}>
             <div className={styles.slotMd} data-jar-slot data-jar-tilt="-8" />
             <div className={styles.text}>
-              <p className={styles.script}>From the wild</p>
+              <p className={styles.kickerLight}>From the wild</p>
               <h2 className={styles.h2Light}>The Western Ghats</h2>
               <p className={styles.lightP}>
                 A green mountain range along India&apos;s west coast, home to dense forest, a
@@ -134,7 +133,6 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <CloudEdge className={styles.bottomClouds} />
         </section>
 
         {/* ---------- Order ---------- */}
@@ -147,18 +145,16 @@ export default function Home() {
                 Leave your details and we&apos;ll get back to you to confirm your order and
                 delivery.
               </p>
-              <div className={styles.badge}>
-                <strong>500 g</strong>
-                <span>raw giant wild honey</span>
-              </div>
-              <Image
-                src="/images/honeycomb.png"
-                alt=""
-                width={478}
-                height={553}
-                className={styles.orderComb}
-                sizes="260px"
-              />
+              <ul className={styles.orderMeta}>
+                <li>
+                  <span>Size</span>
+                  <strong>500 g jar</strong>
+                </li>
+                <li>
+                  <span>Honey</span>
+                  <strong>Raw · Unheated</strong>
+                </li>
+              </ul>
             </div>
             <div className={styles.formCard}>
               <h3>Request your jar</h3>
@@ -171,9 +167,9 @@ export default function Home() {
         <section id="wholesale" className={styles.wholesale}>
           <div className={styles.wholesaleInner}>
             <div className={styles.wholesaleCard}>
-              <p className={styles.kickerLight}>For shops &amp; cafés</p>
-              <h2 className={styles.h2Light}>Stock Tilia</h2>
-              <p className={styles.lightP}>
+              <p className={styles.kicker}>For shops &amp; cafés</p>
+              <h2 className={styles.h2}>Stock Tilia</h2>
+              <p className={styles.p}>
                 We work with retailers, cafés and gift shops that care about where their honey
                 comes from.
               </p>
@@ -202,8 +198,6 @@ export default function Home() {
 
         {/* ---------- Process (purple) ---------- */}
         <section id="process" className={styles.process}>
-          {/* cream, to continue the wholesale section's background */}
-          <DripEdge className={styles.topDrips} color="var(--cream)" shine="#fff" />
           <div className={styles.head}>
             <p className={styles.script}>About our honey</p>
             <h2 className={styles.h2Light}>From comb to jar</h2>
@@ -232,7 +226,6 @@ export default function Home() {
               ))}
             </ol>
           </div>
-          <CloudEdge className={styles.bottomClouds} />
         </section>
 
         {/* ---------- Facts ---------- */}
@@ -249,10 +242,10 @@ export default function Home() {
 
         {/* ---------- Quality band ---------- */}
         <section id="quality" className={styles.quality}>
-          <Landscape className={styles.landscape} />
+          <Forest className={styles.landscape} />
           <div className={styles.qualityInner}>
             <div className={styles.text}>
-              <p className={styles.script}>Quality you can taste</p>
+              <p className={styles.kickerLight}>Quality you can taste</p>
               <h2 className={styles.h2Light}>Straight from the wild</h2>
             </div>
             <div className={styles.qualityRow}>

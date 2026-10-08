@@ -22,29 +22,33 @@ const facts = [
   },
 ];
 
+/* Minimal accordion: one question open at a time, answers expand in place. */
 export default function FactTabs() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number | null>(0);
 
   return (
-    <div className={styles.facts}>
-      <div className={styles.factList} role="tablist" aria-orientation="vertical">
-        {facts.map((f, i) => (
-          <button
-            key={f.q}
-            role="tab"
-            aria-selected={i === active}
-            className={`${styles.factTab} ${i === active ? styles.factTabActive : ""}`}
-            onClick={() => setActive(i)}
-          >
-            <span>{String(i + 1).padStart(2, "0")}</span>
-            {f.q}
-          </button>
-        ))}
-      </div>
-      <div key={active} className={styles.factPanel} role="tabpanel">
-        <h3>{facts[active].q}</h3>
-        <p>{facts[active].a}</p>
-      </div>
-    </div>
+    <ul className={styles.facts}>
+      {facts.map((f, i) => {
+        const open = i === active;
+        return (
+          <li key={f.q} className={`${styles.factItem} ${open ? styles.factItemOpen : ""}`}>
+            <button
+              className={styles.factTab}
+              aria-expanded={open}
+              onClick={() => setActive(open ? null : i)}
+            >
+              <span className={styles.factNum}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={styles.factQ}>{f.q}</span>
+              <span className={styles.factIcon} aria-hidden />
+            </button>
+            <div className={styles.factAnswer}>
+              <div>
+                <p>{f.a}</p>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
